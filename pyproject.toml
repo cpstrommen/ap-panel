@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ap-panel"
+version = "0.1.0"
+description = "A native MobiFlight Pico 2 bridge for an X-Plane IFR panel"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+dependencies = ["aiohttp>=3.12,<4", "pyserial>=3.5,<4", "pydantic>=2.11,<3", "PyYAML>=6.0.2,<7"]
+
+[project.scripts]
+ap-panel = "ap_panel.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.3,<10", "pytest-asyncio>=1.0,<2", "ruff>=0.11,<1", "build>=1.2,<2"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ap_panel"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"electronics/pinmap.yaml" = "ap_panel/resources/pinmap.yaml"
+"profiles" = "ap_panel/resources/profiles"
+"mobiflight/firmware-manifest.json" = "ap_panel/resources/firmware-manifest.json"
+"web" = "ap_panel/web"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

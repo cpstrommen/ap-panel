@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "version": "3.1.4",
+  "board_type": "MobiFlight RaspiPico2",
+  "usb_vid": "2E8A",
+  "usb_pid": "F00A",
+  "baudrate": 115200,
+  "dtr": true,
+  "connection_delay_seconds": 1.25,
+  "release_url": "https://github.com/MobiFlight/MobiFlight-FirmwareSource/releases/tag/3.1.4",
+  "archive_url": "https://github.com/MobiFlight/MobiFlight-FirmwareSource/releases/download/3.1.4/Mobiflight-Firmware_3.1.4.zip",
+  "archive_sha256": "188bd74f04727f21ad42f656743accdab34c7865e4111c4d894ca49729249e2c",
+  "uf2_member": "Mobiflight-Firmware/firmware/mobiflight_raspberrypico2_3_1_4.uf2",
+  "uf2_sha256": "35174962d275404626b1cbb4afd5fc5e138e3c355dd71799b3e8d6c4b77d056e",
+  "protocol_source": "https://github.com/MobiFlight/MobiFlight-FirmwareSource/tree/3.1.4/src"
+}

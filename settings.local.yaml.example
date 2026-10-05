@@ -1,0 +1,10 @@
+schema_version: 1
+# Select explicitly; use `ap-panel devices` then record the board's identity.
+serial_number: null
+port: null
+simulator_url: http://127.0.0.1:8086
+dashboard_port: 8787
+log_level: INFO
+log_directory: .ap-panel
+log_max_bytes: 2000000
+log_backup_count: 3

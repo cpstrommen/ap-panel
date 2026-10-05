@@ -1,0 +1,58 @@
+schema_version: 1
+# Catalog provenance is not a claim of testing on this user's installed aircraft.
+simulator_tested: false
+tested_aircraft_path: null
+gear_verified: false
+gear_indices: {}
+flaps_verified: false
+flap_detents: {}
+yd_engaged_key: null
+yd_engaged_verified: false
+sources:
+  - https://developer.x-plane.com/datarefs/
+  - https://developer.x-plane.com/wp-content/plugins/datarefs-app/datarefs.json
+  - https://developer.x-plane.com/article/accessing-the-x-plane-autopilot-from-datarefs/
+  - https://github.com/MobiFlight/XPlaneConnector/blob/master/XPlaneConnector/XPlaneConnector.DataRefs/Commands.cs
+datarefs:
+  aircraft: {path: sim/aircraft/view/acf_relative_path, value_type: data}
+  paused: {path: sim/time/paused, value_type: int}
+  ap_type: {path: sim/aircraft/autopilot/preconfigured_ap_type, value_type: int}
+  ap: {path: sim/cockpit2/autopilot/autopilot_on, value_type: int}
+  hdg_status: {path: sim/cockpit2/autopilot/heading_status, value_type: int}
+  nav_status: {path: sim/cockpit2/autopilot/nav_status, value_type: int}
+  gpss_status: {path: sim/cockpit2/autopilot/gpss_status, value_type: int, required: false}
+  apr_status: {path: sim/cockpit2/autopilot/approach_status, value_type: int}
+  alt_armed: {path: sim/cockpit2/autopilot/altitude_hold_armed, value_type: int}
+  alt_status: {path: sim/cockpit2/autopilot/altitude_hold_status, value_type: int}
+  vs_status: {path: sim/cockpit2/autopilot/vvi_status, value_type: int}
+  gs_status: {path: sim/cockpit2/autopilot/glideslope_status, value_type: int}
+  heading: {path: sim/cockpit2/autopilot/heading_dial_deg_mag_pilot, value_type: float}
+  selected_altitude: {path: sim/cockpit2/autopilot/altitude_dial_ft, value_type: float, required: false, writable: true}
+  held_altitude: {path: sim/cockpit2/autopilot/altitude_hold_ft, value_type: float}
+  pilot_altitude: {path: sim/cockpit2/gauges/indicators/altitude_ft_pilot, value_type: float}
+  vs: {path: sim/cockpit2/autopilot/vvi_dial_fpm, value_type: float, writable: true}
+  baro: {path: sim/cockpit2/gauges/actuators/barometer_setting_in_hg_pilot, value_type: float}
+  source: {path: sim/cockpit2/radios/actuators/HSI_source_select_pilot, value_type: int}
+  fd_mode: {path: sim/cockpit2/autopilot/flight_director_mode, value_type: int, required: false}
+  yd_selected: {path: sim/cockpit2/switches/yaw_damper_on, value_type: int, required: false}
+  gear: {path: sim/flightmodel2/gear/deploy_ratio, value_type: float_array, required: false}
+  flap_actual: {path: sim/cockpit2/controls/flap_system_deploy_ratio, value_type: float, required: false}
+actions:
+  AP: {command: sim/autopilot/servos_toggle, requires: [ap]}
+  HDG: {command: sim/autopilot/heading, requires: [hdg_status]}
+  NAV: {command: sim/autopilot/NAV, requires: [nav_status]}
+  APR: {command: sim/autopilot/approach, requires: [apr_status]}
+  ALT: {command: sim/autopilot/altitude_hold, requires: [alt_status]}
+  CDI: {kind: cdi, requires: [source]}
+  HDG_CW: {command: sim/autopilot/heading_up, requires: [heading]}
+  HDG_CCW: {command: sim/autopilot/heading_down, requires: [heading]}
+  HDG_PUSH: {command: sim/autopilot/heading_sync, requires: [heading]}
+  VS_CW: {command: sim/autopilot/vertical_speed_up, requires: [vs]}
+  VS_CCW: {command: sim/autopilot/vertical_speed_down, requires: [vs]}
+  VS_PUSH: {kind: write, dataref: vs, value: 0.0, requires: [vs]}
+  BARO_CW: {command: sim/instruments/barometer_up, requires: [baro]}
+  BARO_CCW: {command: sim/instruments/barometer_down, requires: [baro]}
+  BARO_PUSH: {command: sim/instruments/barometer_2992, requires: [baro]}
+  FLAPS_CW: {command: sim/flight_controls/flaps_down}
+  FLAPS_CCW: {command: sim/flight_controls/flaps_up}
+disabled: {}

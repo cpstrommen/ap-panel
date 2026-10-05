@@ -1,0 +1,34 @@
+schema_version: 1
+id: c90b
+name: Laminar King Air C90B
+aircraft_paths:
+  - Aircraft/Laminar Research/King Air C90B/King Air C90B.acf
+  - Aircraft/Laminar Research/King Air C90B/KingAirC90B.acf
+altitude_preselection: true
+simulator_tested: false
+tested_aircraft_path: null
+alt_sync_use_write: false
+# Gear indices, flap ratios and YD engaged feedback require actual-aircraft commissioning.
+gear_verified: false
+gear_indices: {}
+flaps_verified: false
+flap_detents: {}
+yd_engaged_key: null
+yd_engaged_verified: false
+datarefs:
+  selected_altitude: {path: sim/cockpit2/autopilot/altitude_dial_ft, value_type: float, writable: true}
+  course: {path: sim/cockpit2/radios/actuators/hsi_obs_deg_mag_pilot, value_type: float}
+  fd_selected: {path: laminar/c90/avionics/EFIS/switch_pos/fd, required: false}
+actions:
+  FD: {command: laminar/c90/avionics/switch/fd, requires: [fd_mode, fd_selected]}
+  VS: {command: sim/autopilot/vertical_speed_pre_sel, requires: [vs, vs_status]}
+  ALT_SEL: {kind: alt_sel, requires: [selected_altitude, vs, vs_status, alt_armed, alt_status]}
+  ALT_CW: {command: sim/autopilot/altitude_up, requires: [selected_altitude]}
+  ALT_CCW: {command: sim/autopilot/altitude_down, requires: [selected_altitude]}
+  ALT_PUSH: {kind: alt_sync, command: sim/autopilot/altitude_sync, requires: [selected_altitude, pilot_altitude]}
+  CRS_CW: {command: sim/radios/obs_HSI_up, requires: [course]}
+  CRS_CCW: {command: sim/radios/obs_HSI_down, requires: [course]}
+  CRS_PUSH: {kind: course_sync, command: sim/radios/obs_HSI_direct, requires: [course, source]}
+  YD: {command: sim/systems/yaw_damper_toggle, requires: [yd_selected]}
+  GEAR_DOWN: {command: sim/flight_controls/landing_gear_down}
+  GEAR_UP: {command: sim/flight_controls/landing_gear_up}

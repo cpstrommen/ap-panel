@@ -1,0 +1,57 @@
+schema_version: 1
+board_type: MobiFlight RaspiPico2
+firmware: 3.1.4
+# Set true only after completing the physical input/encoder/lamp/LCD checklist.
+bench_verified: false
+encoders:
+  - {name: HDG, gpio_a: 0, gpio_b: 1, physical_a: 1, physical_b: 2, connector: JP53, decoder_type: 0, inverted: false}
+  - {name: ALT, gpio_a: 2, gpio_b: 3, physical_a: 4, physical_b: 5, connector: JP52, decoder_type: 0, inverted: false}
+  - {name: VS, gpio_a: 6, gpio_b: 7, physical_a: 9, physical_b: 10, connector: JP51, decoder_type: 0, inverted: false}
+  - {name: CRS, gpio_a: 8, gpio_b: 9, physical_a: 11, physical_b: 12, connector: JP50, decoder_type: 0, inverted: false}
+  - {name: BARO, gpio_a: 10, gpio_b: 11, physical_a: 14, physical_b: 15, connector: JP49, decoder_type: 0, inverted: false}
+  - {name: FLAPS, gpio_a: 12, gpio_b: 13, physical_a: 16, physical_b: 17, connector: JP48, decoder_type: 0, inverted: false}
+input_chain: {name: IN, load: 14, clock: 15, data: 16, physical_load: 19, physical_clock: 20, physical_data: 21, chips: 2}
+output_chain: {name: OUT, data: 17, clock: 18, latch: 19, physical_data: 22, physical_clock: 24, physical_latch: 25, chips: 3}
+lcd: {name: LCD, address: 39, columns: 20, rows: 4, sda: 4, scl: 5, physical_sda: 6, physical_scl: 7}
+inputs:
+  - {index: 0, name: AP, chip: IC1, channel: A, physical_pin: 11, connector: JP8}
+  - {index: 1, name: FD, chip: IC1, channel: B, physical_pin: 12, connector: JP9}
+  - {index: 2, name: HDG, chip: IC1, channel: C, physical_pin: 13, connector: JP10}
+  - {index: 3, name: NAV, chip: IC1, channel: D, physical_pin: 14, connector: JP11}
+  - {index: 4, name: APR, chip: IC1, channel: E, physical_pin: 3, connector: JP12}
+  - {index: 5, name: ALT_SEL, chip: IC1, channel: F, physical_pin: 4, connector: JP13}
+  - {index: 6, name: ALT, chip: IC1, channel: G, physical_pin: 5, connector: JP14}
+  - {index: 7, name: VS, chip: IC1, channel: H, physical_pin: 6, connector: JP15}
+  - {index: 8, name: YD, chip: IC2, channel: A, physical_pin: 11, connector: JP16}
+  - {index: 9, name: CDI, chip: IC2, channel: B, physical_pin: 12, connector: JP17}
+  - {index: 10, name: HDG_PUSH, chip: IC2, channel: C, physical_pin: 13, connector: JP18}
+  - {index: 11, name: ALT_PUSH, chip: IC2, channel: D, physical_pin: 14, connector: JP19}
+  - {index: 12, name: VS_PUSH, chip: IC2, channel: E, physical_pin: 3, connector: JP20}
+  - {index: 13, name: CRS_PUSH, chip: IC2, channel: F, physical_pin: 4, connector: JP21}
+  - {index: 14, name: BARO_PUSH, chip: IC2, channel: G, physical_pin: 5, connector: JP22}
+  - {index: 15, name: GEAR, chip: IC2, channel: H, physical_pin: 6, connector: JP23}
+outputs:
+  - {index: 0, name: AP, chip: U2, q: 0, physical_pin: 15, uln_chip: IC3, uln_input: 8, uln_output: 11, connector: JP31}
+  - {index: 1, name: FD, chip: U2, q: 1, physical_pin: 1, uln_chip: IC3, uln_input: 7, uln_output: 12, connector: JP30}
+  - {index: 2, name: HDG, chip: U2, q: 2, physical_pin: 2, uln_chip: IC3, uln_input: 6, uln_output: 13, connector: JP29}
+  - {index: 3, name: NAV, chip: U2, q: 3, physical_pin: 3, uln_chip: IC3, uln_input: 5, uln_output: 14, connector: JP28}
+  - {index: 4, name: APR, chip: U2, q: 4, physical_pin: 4, uln_chip: IC3, uln_input: 4, uln_output: 15, connector: JP27}
+  - {index: 5, name: ALT_SEL, chip: U2, q: 5, physical_pin: 5, uln_chip: IC3, uln_input: 3, uln_output: 16, connector: JP26}
+  - {index: 6, name: ALT, chip: U2, q: 6, physical_pin: 6, uln_chip: IC3, uln_input: 2, uln_output: 17, connector: JP25}
+  - {index: 7, name: VS, chip: U2, q: 7, physical_pin: 7, uln_chip: IC3, uln_input: 1, uln_output: 18, connector: JP24}
+  - {index: 8, name: YD, chip: U3, q: 0, physical_pin: 15, uln_chip: IC4, uln_input: 8, uln_output: 11, connector: JP39}
+  - {index: 9, name: GPS, chip: U3, q: 1, physical_pin: 1, uln_chip: IC4, uln_input: 7, uln_output: 12, connector: JP38}
+  - {index: 10, name: VLOC, chip: U3, q: 2, physical_pin: 2, uln_chip: IC4, uln_input: 6, uln_output: 13, connector: JP37}
+  - {index: 11, name: GS_CAP, chip: U3, q: 3, physical_pin: 3, uln_chip: IC4, uln_input: 5, uln_output: 14, connector: JP36}
+  - {index: 12, name: GEAR_L, chip: U3, q: 4, physical_pin: 4, uln_chip: IC4, uln_input: 4, uln_output: 15, connector: JP35}
+  - {index: 13, name: GEAR_N, chip: U3, q: 5, physical_pin: 5, uln_chip: IC4, uln_input: 3, uln_output: 16, connector: JP34}
+  - {index: 14, name: GEAR_R, chip: U3, q: 6, physical_pin: 6, uln_chip: IC4, uln_input: 2, uln_output: 17, connector: JP33}
+  - {index: 15, name: FLAPS_UP, chip: U3, q: 7, physical_pin: 7, uln_chip: IC4, uln_input: 1, uln_output: 18, connector: JP32}
+  - {index: 16, name: FLAPS_1, chip: U4, q: 0, physical_pin: 15, uln_chip: IC5, uln_input: 8, uln_output: 11, connector: JP47}
+  - {index: 17, name: FLAPS_2, chip: U4, q: 1, physical_pin: 1, uln_chip: IC5, uln_input: 7, uln_output: 12, connector: JP46}
+  - {index: 18, name: FLAPS_FULL, chip: U4, q: 2, physical_pin: 2, uln_chip: IC5, uln_input: 6, uln_output: 13, connector: JP45}
+  - {index: 19, name: SPARE_1, chip: U4, q: 3, physical_pin: 3, uln_chip: IC5, uln_input: 5, uln_output: 14, connector: JP44, reserved: true}
+  - {index: 20, name: SPARE_2, chip: U4, q: 4, physical_pin: 4, uln_chip: IC5, uln_input: 4, uln_output: 15, connector: JP43, reserved: true}
+  - {index: 21, name: SPARE_3, chip: U4, q: 5, physical_pin: 5, uln_chip: IC5, uln_input: 3, uln_output: 16, connector: JP42, reserved: true}
+  - {index: 22, name: SPARE_4, chip: U4, q: 6, physical_pin: 6, uln_chip: IC5, uln_input: 2, uln_output: 17, connector: JP41, reserved: true}
+  - {index: 23, name: SPARE_5, chip: U4, q: 7, physical_pin: 7, uln_chip: IC5, uln_input: 1, uln_output: 18, connector: JP40, reserved: true}

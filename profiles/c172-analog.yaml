@@ -1,0 +1,29 @@
+schema_version: 1
+id: c172-analog
+name: Laminar C172 analog
+aircraft_paths:
+  - Aircraft/Laminar Research/Cessna 172 SP/Cessna_172SP.acf
+expected_ap_types: [3]
+altitude_preselection: false
+simulator_tested: false
+tested_aircraft_path: null
+course_sync_use_write: false
+datarefs:
+  course: {path: sim/cockpit2/radios/actuators/nav1_obs_deg_mag_pilot, value_type: float, writable: true}
+  nav1_bearing: {path: sim/cockpit2/radios/indicators/nav1_bearing_deg_mag, value_type: float, required: false}
+  nav1_flag: {path: sim/cockpit2/radios/indicators/nav1_flag_from_to_pilot, value_type: int, required: false}
+  nav1_type: {path: sim/cockpit2/radios/indicators/nav1_type, value_type: int, required: false}
+actions:
+  VS: {command: sim/autopilot/vertical_speed, requires: [vs_status]}
+  CRS_CW: {command: sim/radios/obs1_up, requires: [course]}
+  CRS_CCW: {command: sim/radios/obs1_down, requires: [course]}
+  CRS_PUSH: {kind: course_sync, command: sim/radios/obs_HSI_direct, requires: [course, source, nav1_bearing, nav1_flag, nav1_type]}
+disabled:
+  FD: The installed S-Tec 55 has no independent flight director control
+  ALT_SEL: The installed S-Tec 55 has no altitude preselector
+  ALT_CW: No selected-altitude preselector
+  ALT_CCW: No selected-altitude preselector
+  ALT_PUSH: No selected-altitude preselector
+  YD: The C172 has no yaw damper
+  GEAR_DOWN: The C172 has fixed landing gear
+  GEAR_UP: The C172 has fixed landing gear
