@@ -7,12 +7,12 @@ See [verification.md](verification.md) for software evidence versus pending phys
 ## 1. Prepare and provision
 
 ```bash
-uv run ap-panel validate --generate
-uv run ap-panel devices
-uv run ap-panel doctor
-uv run ap-panel configure --serial SN-YOUR_BOARD_ID --dry-run
-uv run ap-panel configure --serial SN-YOUR_BOARD_ID --backup backups/before-commission.json
-uv run ap-panel bench --serial SN-YOUR_BOARD_ID
+uv run --no-editable ap-panel validate --generate
+uv run --no-editable ap-panel devices
+uv run --no-editable ap-panel doctor
+uv run --no-editable ap-panel configure --serial SN-YOUR_BOARD_ID --dry-run
+uv run --no-editable ap-panel configure --serial SN-YOUR_BOARD_ID --backup backups/before-commission.json
+uv run --no-editable ap-panel bench --serial SN-YOUR_BOARD_ID
 ```
 
 - [ ] Confirm the actual controller is a Pico 2 and GetInfo reports `MobiFlight RaspiPico2`, firmware `3.1.4`.
@@ -94,7 +94,7 @@ After every hardware check passes, set `bench_verified: true` in `electronics/pi
 ## 5. Observe the actual aircraft
 
 ```bash
-uv run ap-panel run --serial SN-YOUR_BOARD_ID --observe --record recordings/observe.jsonl
+uv run --no-editable ap-panel run --serial SN-YOUR_BOARD_ID --observe --record recordings/observe.jsonl
 ```
 
 Load the intended analog C172 or C90B in X-Plane with API v2 available.
@@ -129,7 +129,7 @@ For YD, add a reference-verified DataRef representing engagement to the profile 
 ## 6. Test physical commands in explicit commissioning mode
 
 ```bash
-uv run ap-panel run --serial SN-YOUR_BOARD_ID --commission --record recordings/aircraft-commission.jsonl
+uv run --no-editable ap-panel run --serial SN-YOUR_BOARD_ID --commission --record recordings/aircraft-commission.jsonl
 ```
 
 The dashboard must clearly show commissioning mode and the unverified candidate. Start the commissioning session to enable physical command testing.

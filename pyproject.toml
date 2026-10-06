@@ -17,6 +17,18 @@ ap-panel = "ap_panel.cli:main"
 [dependency-groups]
 dev = ["pytest>=8.3,<10", "pytest-asyncio>=1.0,<2", "ruff>=0.11,<1", "build>=1.2,<2"]
 
+[tool.uv]
+# Regular installs must refresh when code, aircraft calibration or assets change.
+cache-keys = [
+    { file = "pyproject.toml" },
+    { file = "README.md" },
+    { file = "src/**/*.py" },
+    { file = "electronics/pinmap.yaml" },
+    { file = "profiles/*.yaml" },
+    { file = "mobiflight/firmware-manifest.json" },
+    { file = "web/*" },
+]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/ap_panel"]
 

@@ -43,24 +43,28 @@ The dashboard controls the host session and diagnostics. Flight controls remain 
 From the repository directory:
 
 ```bash
-uv sync --group dev
-uv run ap-panel --help
-uv run ap-panel validate --generate
-uv run ap-panel run --demo
+uv sync --no-editable --group dev
+uv run --no-editable ap-panel --help
+uv run --no-editable ap-panel validate --generate
+uv run --no-editable ap-panel run --demo
 ```
 
 Install `uv` first if it is absent (`brew install uv` on a Homebrew Mac), or follow the [official installation instructions](https://docs.astral.sh/uv/getting-started/installation/).
 
 Open [the local dashboard](http://127.0.0.1:8787). Demo mode shows offline sample feedback and connects to neither board nor simulator. HTML, CSS, and JavaScript are served directly; there is no frontend build requirement.
 
-A conventional virtual environment with `pip install -e .` also provides the `ap-panel` entry point. Dependencies are aiohttp, pyserial, Pydantic, and PyYAML. Packaged installations include dashboard assets and default configuration resources.
+A conventional virtual environment with `pip install .` also provides the `ap-panel` entry point. Dependencies are aiohttp, pyserial, Pydantic, and PyYAML. Packaged installations include dashboard assets and default configuration resources.
+
+Use `--no-editable` on each uv launch. On macOS, an editable installation can lose its source path if the generated `.pth` file acquires the hidden flag, causing `ModuleNotFoundError: No module named 'ap_panel.cli'`. Regular installation avoids that path file. Project cache keys track Python source, aircraft profiles, hardware calibration, and dashboard assets so changes rebuild on the next uv launch. [uv documents regular installation](https://docs.astral.sh/uv/concepts/projects/sync/#editable-installation).
+
+Stop the terminal process with **Ctrl-C**. **Ctrl-Z suspends it** and leaves its port occupied. If suspended, run `fg` in the same terminal and then press Ctrl-C. Closing the browser or pressing dashboard Stop leaves the server process running.
 
 ## Firmware installation on macOS
 
 [`mobiflight/firmware-manifest.json`](mobiflight/firmware-manifest.json) pins the official release, archive/member hashes, board type, and serial settings. Download the [official firmware 3.1.4 archive](https://github.com/MobiFlight/MobiFlight-FirmwareSource/releases/tag/3.1.4), then verify it:
 
 ```bash
-uv run ap-panel firmware verify --archive /path/to/Mobiflight-Firmware_3.1.4.zip --extract /path/to/mobiflight_raspberrypico2_3_1_4.uf2
+uv run --no-editable ap-panel firmware verify --archive /path/to/Mobiflight-Firmware_3.1.4.zip --extract /path/to/mobiflight_raspberrypico2_3_1_4.uf2
 ```
 
 The Pico 2 image is `Mobiflight-Firmware/firmware/mobiflight_raspberrypico2_3_1_4.uf2`.
@@ -99,15 +103,15 @@ Select the MobiFlight-reported board serial rather than depending on a changing 
 Logs default to `.ap-panel/bridge.log` at INFO, rotating at 2,000,000 bytes with three backups. These settings control rotation and verbosity; session recordings are separate explicitly selected files.
 
 ```bash
-uv run ap-panel devices
-uv run ap-panel doctor
-uv run ap-panel configure --serial SN-YOUR_BOARD_ID --dry-run
-uv run ap-panel configure --serial SN-YOUR_BOARD_ID --backup backups/pico-before-config.json
-uv run ap-panel bench --serial SN-YOUR_BOARD_ID
-uv run ap-panel run --serial SN-YOUR_BOARD_ID --observe
-uv run ap-panel run --serial SN-YOUR_BOARD_ID --commission --record recordings/commission.jsonl
-uv run ap-panel run --serial SN-YOUR_BOARD_ID
-uv run ap-panel replay recordings/commission.jsonl
+uv run --no-editable ap-panel devices
+uv run --no-editable ap-panel doctor
+uv run --no-editable ap-panel configure --serial SN-YOUR_BOARD_ID --dry-run
+uv run --no-editable ap-panel configure --serial SN-YOUR_BOARD_ID --backup backups/pico-before-config.json
+uv run --no-editable ap-panel bench --serial SN-YOUR_BOARD_ID
+uv run --no-editable ap-panel run --serial SN-YOUR_BOARD_ID --observe
+uv run --no-editable ap-panel run --serial SN-YOUR_BOARD_ID --commission --record recordings/commission.jsonl
+uv run --no-editable ap-panel run --serial SN-YOUR_BOARD_ID
+uv run --no-editable ap-panel replay recordings/commission.jsonl
 ```
 
 `devices` lists eligible Pico 2 ports without opening them; `devices --all` includes other serial ports for diagnosis.
@@ -315,9 +319,9 @@ Complete [the hardware/aircraft checklist](documentation/commissioning.md), reco
 Binding metadata separates authoritative-reference verification from individual installed-aircraft testing; the top-level profile records aggregate qualification. Real acceptance includes a continuous recorded session longer than one hour, measured local feedback against a 250 ms target, measured simulator-loss response against a 2.5-second target, and reproduction of the accepted hard-crash fallback. These physical timing/endurance measurements remain pending, as does browser visual QA; actual local demo HTTP/WebSocket service checks are separate evidence.
 
 ```bash
-uv run pytest
-uv run ruff check .
-uv run python -m build
+uv run --no-editable pytest
+uv run --no-editable ruff check .
+uv run --no-editable python -m build
 ```
 
 Automated checks cover protocol boundaries, fake serial configuration/identity/snapshots, fake simulator resolution/acknowledgements/reconnection, input and capability rules, feedback rendering, and dashboard HTTP/WebSocket validation. They do not test the physical wiring or actual aircraft. Session recordings and offline replay summaries help diagnose behavior; they are not substitutes for physical qualification.

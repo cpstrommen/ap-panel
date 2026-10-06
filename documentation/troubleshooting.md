@@ -6,11 +6,30 @@ Application logs default to `.ap-panel/bridge.log`, rotating at 2,000,000 bytes 
 
 ## Application or dashboard does not start
 
-Run `uv sync --group dev`, `uv run ap-panel --help`, and `uv run ap-panel doctor`. Python 3.12 or newer is required. `run --demo` separates installation/browser checks from board/simulator problems.
+Run `uv sync --no-editable --group dev`, `uv run --no-editable ap-panel --help`, and `uv run --no-editable ap-panel doctor`. Python 3.12 or newer is required. `run --demo` separates installation/browser checks from board/simulator problems.
 
 The dashboard uses `http://127.0.0.1:8787` by default. Stop another instance if the port is occupied, or choose `--dashboard-port`. Use its configured loopback host/port directly. Arbitrary Host headers and cross-origin POST/WebSocket requests are rejected; this service is not configured for public URLs or reverse proxies.
 
-Closing the browser does not stop the application. Use Stop in the dashboard or terminate the host session when finished.
+Closing the browser does not stop the application. Dashboard Stop clears outputs and disables dispatch while keeping the server open. **Ctrl-C** in the foreground terminal shuts down the application and releases its port.
+
+## Import fails after a successful launch
+
+If `uv run ap-panel ...` raises `ModuleNotFoundError: No module named 'ap_panel.cli'`, an editable install may have lost its source path. On macOS, Python skips a `.pth` file with the filesystem hidden flag. Dashboard/configuration assets can still exist under `site-packages/ap_panel`, so the package appears present even though its Python modules are missing.
+
+Use regular installation consistently:
+
+```bash
+uv sync --no-editable
+uv run --no-editable ap-panel run --demo
+```
+
+Keep `--no-editable` on subsequent uv commands; a bare `uv run` can switch the project back to editable installation. Alternatively, `export UV_NO_EDITABLE=1` in the current terminal makes that mode apply to subsequent uv commands. The project's cache keys track source/profile/calibration/asset changes so regular installations refresh after edits.
+
+The environment recreation message when uv selects a different Python version is normal. Both Python 3.12 and 3.14 can run this project; choosing 3.14 was not the cause of the hidden path-file failure.
+
+## Terminal says suspended or refuses to exit
+
+**Ctrl-Z** suspends the process rather than closing it. A suspended server cannot answer requests, but still owns its listening port. In the terminal that launched it, run `jobs -l`, use `fg` (or `fg %N` for the matching job number), then press **Ctrl-C**. Do this before launching another instance. There is no need to restart the Mac or delete the project environment.
 
 ## No Pico appears
 

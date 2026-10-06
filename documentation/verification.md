@@ -6,13 +6,15 @@ The initial release leaves hardware and aircraft qualification false. Keep those
 
 ## Checked revision — October 5, 2026
 
-- `pytest -q -W error`: **345 passed**, with Python 3.12.8 on macOS.
+- Initial checks: **345 passed**, with Python 3.12.8 on macOS. The launch-recovery revision passes **346 tests** on Python 3.14.8, including an installed-package regression independent of pytest's source path.
 - `ruff check src tests` and `ruff format --check src tests`: passed.
 - `node --check web/app.js` and `uv lock --check`: passed.
 - Source distribution and wheel built successfully; the wheel installed in a separate environment outside the checkout. Its default resources, configuration validation, dashboard assets, demo server, and replay were exercised.
 - The official 3.1.4 ZIP and Pico 2 UF2 matched both pinned SHA-256 checksums. No controller was flashed.
 - Actual demo HTTP/WebSocket status delivery and cross-origin rejection were checked. A transport integration test covers a serial encoder event, native command request, subsequent simulator feedback, LCD serialization, and connection loss.
 - The local discovery check found **no eligible Pico 2**, and the default X-Plane API did not respond. Real commissioning and native browser visual review remain pending.
+
+The operator subsequently confirmed the local dashboard opened and rendered correctly. The macOS editable-install failure was reproduced: Python skipped the hidden `.pth` file and could not import `ap_panel.cli`. Documented uv commands now use `--no-editable`. On Python 3.14.8, repeated imports, demo start/Ctrl-C/restart on port 8787, and configuration dry run passed. The installation regression also changes copied source, LCD calibration, and CSS and verifies that uv rebuilds the installed package from those changes. Full responsive/interaction review and physical commissioning remain separate checks.
 
 ## Software coverage and its limits
 
@@ -36,7 +38,7 @@ The initial release leaves hardware and aircraft qualification false. Keep those
 | Recording / replay | Tests cover metadata/configuration integrity, input/feedback reconstruction, malformed recordings, and zero transport actions in replay | **PENDING:** a complete recorded real commissioning session |
 | Installation / package | CLI help, validation, configuration dry run, fake tests, lint, and package checks are recorded separately for the delivered revision | **PENDING:** use on the operator's target macOS environment with real transports |
 
-Evidence lives in `tests/test_protocol.py`, `test_config.py`, `test_board.py`, `test_xplane.py`, `test_inputs_outputs.py`, `test_actions.py`, `test_runtime.py`, `test_dashboard.py`, `test_cli_replay.py`, and `test_integration.py`. These are software checks, not hardware-operation tests.
+Evidence lives in `tests/test_protocol.py`, `test_config.py`, `test_board.py`, `test_xplane.py`, `test_inputs_outputs.py`, `test_actions.py`, `test_runtime.py`, `test_dashboard.py`, `test_cli_replay.py`, `test_integration.py`, and `test_installation.py`. The installation check requires uv and already cached build/runtime dependencies; it uses offline mode. These are software checks, not hardware-operation tests.
 
 ## Binding provenance and qualification
 
