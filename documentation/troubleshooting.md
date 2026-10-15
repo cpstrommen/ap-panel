@@ -95,7 +95,7 @@ If a healthy session blanks at about 15 minutes, inspect the periodic `18,0;` ke
 
 Check 5 V power, GND, level-shifter LV/HV, SDA GP4, SCL GP5, physical contrast, and backpack address. `0x27` is decimal `39`; `0x3F` is `63`. Change the pin map and reprovision for a different address. There is no stock serial I²C scan API.
 
-Command 25 targets registered LCD index `0`, not the backpack address. Frames replace all 80 printable ASCII characters; shorter bench text is padded. Escaping counts toward the 95-byte complete command bound.
+Command 25 targets registered LCD index `0`, not the backpack address. Frames replace all 80 printable ASCII characters; shorter bench text is padded. Escaping counts toward the 94-byte complete command bound.
 
 Stock LCD initialization uses 400 kHz I²C; the native host cannot adjust that through this protocol. If wiring/address checks pass but a specific backpack fails, investigate hardware compatibility. USB baud is unrelated to the I²C clock.
 

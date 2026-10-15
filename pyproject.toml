@@ -6,10 +6,21 @@ build-backend = "hatchling.build"
 name = "ap-panel"
 version = "0.1.0"
 description = "A native MobiFlight Pico 2 bridge for an X-Plane IFR panel"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Operating System :: MacOS",
+]
+keywords = ["x-plane", "flight-simulation", "raspberry-pi-pico", "mobiflight"]
 readme = "README.md"
 requires-python = ">=3.12"
 license = "MIT"
 dependencies = ["aiohttp>=3.12,<4", "pyserial>=3.5,<4", "pydantic>=2.11,<3", "PyYAML>=6.0.2,<7"]
+
+[project.urls]
+Repository = "https://github.com/cpstrommen/ap-panel"
+Documentation = "https://github.com/cpstrommen/ap-panel#readme"
 
 [project.scripts]
 ap-panel = "ap_panel.cli:main"

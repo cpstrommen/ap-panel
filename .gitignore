@@ -1,13 +1,42 @@
+# Python environments and generated files
 .venv/
+venv/
 __pycache__/
 *.py[cod]
 .pytest_cache/
 .ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
 dist/
 build/
 *.egg-info/
+
+# Machine-specific settings, credentials, and diagnostics
 .ap-panel/
-settings.local.yaml
+settings.local.*
+!settings.local.yaml.example
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.log
+*.jsonl
+!tests/fixtures/**/*.jsonl
 recordings/
 backups/
+config-backup-*.json
+
+# Firmware stays external; provenance is tracked in mobiflight/ instead
+*.uf2
+Mobiflight-Firmware_*.zip
+Mobiflight-Firmware/
+
+# Local editor and operating-system files
+*.code-workspace
+*.swp
+*.swo
 .DS_Store
