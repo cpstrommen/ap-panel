@@ -2,9 +2,11 @@
 
 This matrix separates software evidence from physical and installed-aircraft qualification. Automated coverage uses fake serial and X-Plane endpoints. A passing fake test does not establish that the breadboard is wired correctly or that a catalog command behaves identically on the installed aircraft.
 
-The initial release leaves hardware and aircraft qualification false. Keep those flags false until the corresponding checks in [commissioning.md](commissioning.md) pass. Exact suite/build results should accompany the delivered revision; physical measurements belong in the qualification record.
+The current prototype defaults leave hardware and aircraft qualification false. Keep those flags false until the corresponding checks in [commissioning.md](commissioning.md) pass. Exact suite/build results should accompany the checked revision; physical measurements belong in the qualification record.
 
-## Checked revision — October 5, 2026
+## Historical development checks — October 5–6, 2026
+
+These are dated development observations, not a claim that the current working tree is a finished or hardware-verified release.
 
 - Initial checks: **345 passed**, with Python 3.12.8 on macOS. The launch-recovery revision passes **346 tests** on Python 3.14.8, including an installed-package regression independent of pytest's source path.
 - `ruff check src tests` and `ruff format --check src tests`: passed.
@@ -34,7 +36,7 @@ The operator subsequently confirmed the local dashboard opened and rendered corr
 | 20 × 4 LCD | Tests enforce 80 printable ASCII characters, four exact rows, padding, placeholders, overflow, C172 held-altitude behavior | **PENDING:** backpack address, physical row order, contrast/backlight, character replacement |
 | Runtime Stop/fault/reconnect | Fake runtime tests cover queue invalidation, held baselines, lease failure, aircraft change, bounded backlog, stale events, failed actions, bench cancellation, transport shutdown | **PENDING:** physical outputs on loss/Stop/reconnect and measured detection latency |
 | Dashboard API/security | HTTP/WS tests cover loopback Host/Origin, bounded JSON, readiness errors, bench-only output actions, missing routes/assets, no flight-control mutation routes, unsubscribe | **PENDING:** browser visual/responsive/interaction review |
-| Local demo | Actual local HTTP serving and diagnostic WebSocket updates exercised with offline demo data | **PENDING:** visual QA; native browser automation was unavailable in this environment |
+| Local demo | Actual local HTTP serving and diagnostic WebSocket updates exercised with offline demo data; dashboard rendering subsequently observed locally | **PENDING:** full responsive and interaction review |
 | Recording / replay | Tests cover metadata/configuration integrity, input/feedback reconstruction, malformed recordings, and zero transport actions in replay | **PENDING:** a complete recorded real commissioning session |
 | Installation / package | CLI help, validation, configuration dry run, fake tests, lint, and package checks are recorded separately for the delivered revision | **PENDING:** use on the operator's target macOS environment with real transports |
 
